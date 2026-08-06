@@ -11,6 +11,7 @@ import { CustomersModule } from './modules/customers/customers.module';
 import { DistributorsModule } from './modules/distributors/distributors.module';
 import { ProductsModule } from './modules/products/products.module';
 import { OrdersModule } from './modules/orders/orders.module';
+import { EmployeesModule } from './modules/employees/employees.module';
 
 @Module({
   imports: [
@@ -22,6 +23,7 @@ import { OrdersModule } from './modules/orders/orders.module';
     DistributorsModule,
     ProductsModule,
     OrdersModule,
+    EmployeesModule,
   ],
   providers: [
     {
