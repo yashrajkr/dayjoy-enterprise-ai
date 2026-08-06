@@ -6,9 +6,10 @@ import { AllExceptionsFilter } from './common/exceptions/all-exceptions.filter';
 import { LoggingInterceptor } from './common/interceptors/logging.interceptor';
 import { RequestLoggingMiddleware } from './common/middleware/request-logging.middleware';
 import { AuthModule } from './modules/auth/auth.module';
+import { UsersModule } from './modules/users/users.module';
 
 @Module({
-  imports: [ConfigModule, PrismaModule, AuthModule],
+  imports: [ConfigModule, PrismaModule, AuthModule, UsersModule],
   providers: [
     {
       provide: APP_FILTER,

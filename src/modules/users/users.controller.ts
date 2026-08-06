@@ -1,15 +1,43 @@
-import { Request, Response } from 'express';
-import { asyncHandler } from '../../middleware/errorHandler';
-import { listUsers, getUserById } from './users.service';
-import { AuthRequest } from '../../middleware/authenticate';
+import { Body, Controller, Delete, Get, Param, Post, Put, Query, UseGuards } from '@nestjs/common';
+import { UsersService } from './users.service';
+import { CreateUserDto } from './dto/create-user.dto';
+import { UpdateUserDto } from './dto/update-user.dto';
+import { QueryUsersDto } from './dto/query-users.dto';
+import { JwtAuthGuard } from '../auth/guards/jwt-auth.guard';
+import { CurrentUser } from '../../common/decorators/current-user.decorator';
 
-export const listUsersController = asyncHandler(async (req: AuthRequest, res: Response) => {
-  const { page, limit } = req.query;
-  const result = await listUsers(req.tenantId!, Number(page) || 1, Number(limit) || 20);
-  res.json(result);
-});
+@Controller('api/users')
+@UseGuards(JwtAuthGuard)
+export class UsersController {
+  constructor(private readonly usersService: UsersService) {}
 
-export const getUserController = asyncHandler(async (req: AuthRequest, res: Response) => {
-  const user = await getUserById(req.params.id, req.tenantId!);
-  res.json({ data: user });
-});
+  @Get()
+  async list(@CurrentUser() user: any, @Query() query: QueryUsersDto) {
+    return this.usersService.list(user.tenantId, query);
+  }
+
+  @Get(':id')
+  async getById(@CurrentUser() user: any, @Param('id') id: string) {
+    return this.usersService.findById(id, user.tenantId);
+  }
+
+  @Post()
+  async create(@Body() dto: CreateUserDto) {
+    // For now, tenantId is taken from dto directly; later we will enforce RBAC.
+    return this.usersService.create(dto);
+  }
+
+  @Put(':id')
+  async update(
+    @CurrentUser() user: any,
+    @Param('id') id: string,
+    @Body() dto: UpdateUserDto,
+  ) {
+    return this.usersService.update(id, user.tenantId, dto);
+  }
+
+  @Delete(':id')
+  async softDelete(@CurrentUser() user: any, @Param('id') id: string) {
+    return this.usersService.softDelete(id, user.tenantId);
+  }
+}
