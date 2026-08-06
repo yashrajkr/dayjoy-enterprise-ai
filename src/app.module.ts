@@ -13,6 +13,7 @@ import { ProductsModule } from './modules/products/products.module';
 import { OrdersModule } from './modules/orders/orders.module';
 import { EmployeesModule } from './modules/employees/employees.module';
 import { NotificationsModule } from './modules/notifications/notifications.module';
+import { AiModule } from './modules/ai/ai.module';
 
 @Module({
   imports: [
@@ -26,6 +27,7 @@ import { NotificationsModule } from './modules/notifications/notifications.modul
     OrdersModule,
     EmployeesModule,
     NotificationsModule,
+    AiModule,
   ],
   providers: [
     {
