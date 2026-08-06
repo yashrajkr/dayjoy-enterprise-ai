@@ -1,0 +1,38 @@
+# Dependencies
+node_modules/
+.pnp
+.pnp.js
+
+# Build
+dist/
+build/
+
+# Prisma
+prisma/*.db
+prisma/migrations/*_migration_lock.toml
+
+# Environment
+.env
+.env.local
+
+# Logs
+logs/
+*.log
+pnpm-debug.log*
+
+# Testing
+coverage/
+
+# IDE
+.idea/
+.vscode/
+*.swp
+*.swo
+
+# OS
+.DS_Store
+Thumbs.db
+
+# Uploads
+uploads/
+temp/
