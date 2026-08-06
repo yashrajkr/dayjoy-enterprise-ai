@@ -15,6 +15,7 @@ import { EmployeesModule } from './modules/employees/employees.module';
 import { NotificationsModule } from './modules/notifications/notifications.module';
 import { AiModule } from './modules/ai/ai.module';
 import { KnowledgeModule } from './modules/knowledge/knowledge.module';
+import { AnalyticsModule } from './modules/analytics/analytics.module';
 
 @Module({
   imports: [
@@ -30,6 +31,7 @@ import { KnowledgeModule } from './modules/knowledge/knowledge.module';
     NotificationsModule,
     AiModule,
     KnowledgeModule,
+    AnalyticsModule,
   ],
   providers: [
     {
