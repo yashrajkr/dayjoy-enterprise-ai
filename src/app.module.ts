@@ -14,6 +14,7 @@ import { OrdersModule } from './modules/orders/orders.module';
 import { EmployeesModule } from './modules/employees/employees.module';
 import { NotificationsModule } from './modules/notifications/notifications.module';
 import { AiModule } from './modules/ai/ai.module';
+import { KnowledgeModule } from './modules/knowledge/knowledge.module';
 
 @Module({
   imports: [
@@ -28,6 +29,7 @@ import { AiModule } from './modules/ai/ai.module';
     EmployeesModule,
     NotificationsModule,
     AiModule,
+    KnowledgeModule,
   ],
   providers: [
     {
