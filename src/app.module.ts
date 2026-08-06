@@ -5,6 +5,7 @@ import { APP_FILTER, APP_GUARD, APP_INTERCEPTOR } from '@nestjs/core';
 import { AllExceptionsFilter } from './common/exceptions/all-exceptions.filter';
 import { LoggingInterceptor } from './common/interceptors/logging.interceptor';
 import { RequestLoggingMiddleware } from './common/middleware/request-logging.middleware';
+import { SecurityMiddleware } from './common/middleware/security.middleware';
 import { RolesGuard } from './common/guards/roles.guard';
 import { AuthModule } from './modules/auth/auth.module';
 import { UsersModule } from './modules/users/users.module';
@@ -53,6 +54,9 @@ import { AdminModule } from './modules/admin/admin.module';
 })
 export class AppModule implements NestModule {
   configure(consumer: MiddlewareConsumer) {
-    consumer.apply(RequestLoggingMiddleware).forRoutes('*');
+    consumer
+      .apply(RequestLoggingMiddleware)
+      .apply(SecurityMiddleware)
+      .forRoutes('*');
   }
 }
