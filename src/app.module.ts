@@ -8,9 +8,17 @@ import { RequestLoggingMiddleware } from './common/middleware/request-logging.mi
 import { AuthModule } from './modules/auth/auth.module';
 import { UsersModule } from './modules/users/users.module';
 import { CustomersModule } from './modules/customers/customers.module';
+import { DistributorsModule } from './modules/distributors/distributors.module';
 
 @Module({
-  imports: [ConfigModule, PrismaModule, AuthModule, UsersModule, CustomersModule],
+  imports: [
+    ConfigModule,
+    PrismaModule,
+    AuthModule,
+    UsersModule,
+    CustomersModule,
+    DistributorsModule,
+  ],
   providers: [
     {
       provide: APP_FILTER,
