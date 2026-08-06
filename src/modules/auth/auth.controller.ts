@@ -1,17 +1,56 @@
-import { Request, Response } from 'express';
-import { asyncHandler, ValidationError } from '../../middleware/errorHandler';
-import { register, login } from './auth.service';
+import { Body, Controller, HttpCode, HttpStatus, Post, UseGuards } from '@nestjs/common';
+import { AuthService } from './auth.service';
+import { RegisterDto } from './dto/register.dto';
+import { LoginDto } from './dto/login.dto';
+import { RefreshTokenDto } from './dto/refresh-token.dto';
+import { RequestPasswordResetDto } from './dto/request-password-reset.dto';
+import { ResetPasswordDto } from './dto/reset-password.dto';
+import { VerifyEmailDto } from './dto/verify-email.dto';
+import { JwtAuthGuard } from './guards/jwt-auth.guard';
 
-export const registerController = asyncHandler(async (req: Request, res: Response) => {
-  const { email, password, firstName, lastName, phone, tenantId } = req.body;
-  if (!email || !password) throw new ValidationError('Email and password required');
-  const result = await register({ email, password, firstName, lastName, phone, tenantId: tenantId || 'dayjoy' });
-  res.status(201).json({ data: result, message: 'User registered' });
-});
+@Controller('api/auth')
+export class AuthController {
+  constructor(private readonly authService: AuthService) {}
 
-export const loginController = asyncHandler(async (req: Request, res: Response) => {
-  const { email, password, tenantId } = req.body;
-  if (!email || !password) throw new ValidationError('Email and password required');
-  const result = await login({ email, password }, tenantId || 'dayjoy');
-  res.json({ data: result, message: 'Login successful' });
-});
+  @Post('register')
+  async register(@Body() dto: RegisterDto) {
+    return this.authService.register(dto);
+  }
+
+  @HttpCode(HttpStatus.OK)
+  @Post('login')
+  async login(@Body() dto: LoginDto) {
+    return this.authService.login(dto);
+  }
+
+  @HttpCode(HttpStatus.OK)
+  @Post('refresh')
+  async refresh(@Body() dto: RefreshTokenDto) {
+    return this.authService.refresh(dto);
+  }
+
+  @UseGuards(JwtAuthGuard)
+  @HttpCode(HttpStatus.OK)
+  @Post('logout')
+  async logout() {
+    return this.authService.logout();
+  }
+
+  @HttpCode(HttpStatus.OK)
+  @Post('request-password-reset')
+  async requestPasswordReset(@Body() dto: RequestPasswordResetDto) {
+    return this.authService.requestPasswordReset(dto.email);
+  }
+
+  @HttpCode(HttpStatus.OK)
+  @Post('reset-password')
+  async resetPassword(@Body() dto: ResetPasswordDto) {
+    return this.authService.resetPassword(dto.token, dto.newPassword);
+  }
+
+  @HttpCode(HttpStatus.OK)
+  @Post('verify-email')
+  async verifyEmail(@Body() dto: VerifyEmailDto) {
+    return this.authService.verifyEmail(dto.token);
+  }
+}
