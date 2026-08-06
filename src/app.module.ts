@@ -16,6 +16,7 @@ import { NotificationsModule } from './modules/notifications/notifications.modul
 import { AiModule } from './modules/ai/ai.module';
 import { KnowledgeModule } from './modules/knowledge/knowledge.module';
 import { AnalyticsModule } from './modules/analytics/analytics.module';
+import { AdminModule } from './modules/admin/admin.module';
 
 @Module({
   imports: [
@@ -32,6 +33,7 @@ import { AnalyticsModule } from './modules/analytics/analytics.module';
     AiModule,
     KnowledgeModule,
     AnalyticsModule,
+    AdminModule,
   ],
   providers: [
     {
