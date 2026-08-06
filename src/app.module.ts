@@ -7,9 +7,10 @@ import { LoggingInterceptor } from './common/interceptors/logging.interceptor';
 import { RequestLoggingMiddleware } from './common/middleware/request-logging.middleware';
 import { AuthModule } from './modules/auth/auth.module';
 import { UsersModule } from './modules/users/users.module';
+import { CustomersModule } from './modules/customers/customers.module';
 
 @Module({
-  imports: [ConfigModule, PrismaModule, AuthModule, UsersModule],
+  imports: [ConfigModule, PrismaModule, AuthModule, UsersModule, CustomersModule],
   providers: [
     {
       provide: APP_FILTER,
